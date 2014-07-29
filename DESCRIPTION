@@ -1,0 +1,10 @@
+Package: lvglasso
+Type: Package
+Title: What the package does (short line)
+Version: 0.1
+Date: 2014-07-29
+Author: Sacha Epskamp
+Maintainer: Sacha Epskamp <mail@sachaepskamp.com>
+Description: More about what it does (maybe more than one line)
+License: What license is it under?
+Imports: glasso, qgraph, Matrix, corpcor, psych, mvtnorm
