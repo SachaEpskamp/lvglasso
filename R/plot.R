@@ -1,7 +1,7 @@
 # Plotting function:
 plot.lvglasso <- function(
   object, # lvglasso object
-  plot = c("S","L"), # "S" will plot the sparse network between items and "L" the latent loadings
+  plot = c("full","S","L"), # "full" the full network, S" will plot the sparse network between items and "L" the latent loadings
   ask,
   ...
   ){
@@ -11,6 +11,10 @@ plot.lvglasso <- function(
   obs <- object$observed
   pcor <- object$pcor
   Res <- list()
+  
+  if ("full" %in% plot){
+    Res$S <- qgraph(pcor, ..., title = "Full structure", shape = ifelse(obs,"square", "circle"), layout = "spring")
+  }
   
   if ("S" %in% plot){
     Res$S <- qgraph(pcor[obs,obs], ..., title = "Sparse structure", shape = "square", layout = "spring")

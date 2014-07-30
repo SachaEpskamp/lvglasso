@@ -92,7 +92,7 @@ lvglasso <- function(
   nobs <- nrow(S)
   ntot <- nobs + nLatents
   
-  if (missing(lambda)){
+  if (missing(lambda) || is.null(lambda)){
     lambda <- matrix(TRUE, nobs, nLatents)
   }
   
@@ -132,7 +132,7 @@ lvglasso <- function(
   
   # Compute K:
 # browser()
-  K <- solve(cor2cov(Sigma,c(sqrt(diag(S)), rep(1, nLatents) )))
+  K <- solve(cor2cov(cov2cor(Sigma),c(sqrt(diag(S)), rep(1, nLatents) )))
   #  K <- K  
 #   K <- cov2cor(K)
   if (!is.positive.definite(K))

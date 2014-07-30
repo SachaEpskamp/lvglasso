@@ -8,6 +8,7 @@ EBIClvglasso <- function(
   lambda, 
   ... # lvglasso arguments
 ){
+  if (missing(lambda)) lambda <- NULL
   
   # If nLatents is vector, do this function for every latent:
   if (length(nLatents) > 1){
