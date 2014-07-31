@@ -215,13 +215,21 @@ Kold <- K
   
 rownames(pc) <- colnames(pc) <- rownames(K) <- colnames(K)
 
+# Compute psychometric matrices:
+Theta <- solve(K[obs, obs])
+Lambda <- -Theta %*% K[obs,!obs]
+Psi <- solve(K[!obs, !obs] - t(Lambda) %*% K[obs, obs] %*% Lambda)
+
 # Return list mimics glasso:
 Res <- list(
   w = pseudoinverse(K), # Estimated covariance matrix
   wi = K, # Estimated precision matrix
   pcor = pc, # Estimated partial correlation matrix
   observed = obs, # observed and latents indicator
-  niter = it # Number of iterations used in the algorithm
+  niter = it, # Number of iterations used in the algorithm
+  lambda = Lambda,
+  theta = Theta,
+  psi = Psi
     )
 
   class(Res) <- "lvglasso"
