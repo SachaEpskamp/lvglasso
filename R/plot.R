@@ -1,7 +1,7 @@
 # Plotting function:
 plot.lvglasso <- function(
   object, # lvglasso object
-  plot = c("network","loadings","residuals"), # "full" the full network, S" will plot the sparse network between items and "L" the latent loadings
+  plot = c("network","loadings","residcors","residpcors"), # "full" the full network, S" will plot the sparse network between items and "L" the latent loadings
   ask,
   rotation = promax, # A rotation function to be used.
   ...
@@ -18,8 +18,12 @@ plot.lvglasso <- function(
     Res$network <- qgraph(pcor, ..., title = "Estimated network", shape = ifelse(obs,"square", "circle"), layout = "spring")
   }
   
-  if ("residuals" %in% plot){
-    Res$residuals <- qgraph(cov2cor(object$theta), ..., title = "Estimated residual correlations", shape = "square", layout = "spring", repulsion = 0.9)
+  if ("residpcors" %in% plot){
+    Res$residpcors <- qgraph(object$pcor[object$observed,object$observed], ..., title = "Estimated residual partial correlations", shape = "square", layout = "spring", repulsion = 0.9)
+  }
+  
+  if ("residcors" %in% plot){
+    Res$residcors <- qgraph(cov2cor(object$theta), ..., title = "Estimated residual correlations", shape = "square", layout = "spring", repulsion = 0.9)
   }
   
   if ("loadings" %in% plot){
