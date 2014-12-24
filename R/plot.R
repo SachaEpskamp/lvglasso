@@ -6,6 +6,7 @@ plot.lvglasso <- function(
   rotation = promax, # A rotation function to be used.
   ...
   ){
+    
   if (missing(ask)) ask <- length(plot) > 1
   parOrig <- par()
   par(ask = ask)
@@ -32,9 +33,14 @@ plot.lvglasso <- function(
     
     # Rotate:
     rot <- rotation(load)
-    load <- rot$loadings
-    rotmat <- rot$rotmat
-    fCovs <- solve(rotmat) %*% fCovs %*% t(solve(rot$rotmat))
+    if (is.matrix(rot)){
+      load <- rot
+      rotmat <- matrix(1,1,1)
+    } else {
+      load <- rot$loadings
+      rotmat <- rot$rotmat
+    }
+    fCovs <- solve(rotmat) %*% fCovs %*% t(solve(rotmat))
     
     rownames(load) <- colnames(object$wi)[obs]
     Res$loadings <- qgraph.loadings(load, factorCors = fCovs, ..., title = "Estimated factor loadings", labels =  colnames(object$wi)[obs], model = "reflective")
